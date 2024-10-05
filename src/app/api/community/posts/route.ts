@@ -10,6 +10,7 @@ let posts: Post[] = [
     author: { id: 'user1', name: 'Alex',avatarUrl:"https://cdn.discordapp.com/attachments/1031899904953552906/1292168848350384148/avataaars.png?ex=6702c184&is=67017004&hm=e24e78123d6c34fc4192ca4541e7202ac84defe489adf395cdff0c51a2508d8d&" },
     content: 'Welcome to the community! Share your experiences.',
     createdAt: new Date().toISOString(),
+    likes:1
   },
 ];
 
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
     },
     content,
     createdAt: new Date().toISOString(),
+    likes:0
   };
 
   posts.unshift(newPost);

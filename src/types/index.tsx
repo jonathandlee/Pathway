@@ -32,4 +32,5 @@ export interface User {
     author: User;
     content: string;
     createdAt: string; // ISO date string
+    likes: number
   }

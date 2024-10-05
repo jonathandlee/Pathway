@@ -50,17 +50,17 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onPostCreated }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 bg-white p-4 rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Create a Post</h2>
+    <form onSubmit={handleSubmit} className="mb-6 bg-gray p-6">
+      <h2 className="text-3xl font-bold mb-6 text-gray-700">Create a Post</h2>
 
-      <div className="mb-4">
-        <label htmlFor="name" className="block mb-1 font-semibold">
+      <div className="mb-6">
+        <label htmlFor="name" className="block mb-2 font-semibold text-gray-600">
           Name
         </label>
         <input
           id="name"
           type="text"
-          className="w-full p-2 border rounded"
+          className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -68,24 +68,24 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onPostCreated }) => {
         />
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="content" className="block mb-1 font-semibold">
+      <div className="mb-6">
+        <label htmlFor="content" className="block mb-2 font-semibold text-gray-600">
           Post
         </label>
         <textarea
           id="content"
-          className="w-full p-2 border rounded resize-none"
+          className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           rows={4}
           placeholder="Share something with the community..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required
-        ></textarea>
+        />
       </div>
 
       <button
         type="submit"
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300"
         disabled={submitting}
       >
         {submitting ? 'Posting...' : 'Post'}
