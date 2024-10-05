@@ -5,12 +5,21 @@ const HomePage: React.FC = () => (
       {/* Left side with much larger text */}
       <div className="md:w-1/2 p-4 text-left">
         <h1 className="text-7xl font-bold mb-8">Explore Your City with Confidence</h1>
+        <p>Discover your city with a user-friendly app that guides you to the most accessible routes and shares insights from other members of the community</p>
         {/* Buttons below the text */}
         <div className="flex space-x-4 mt-4">
-          <a href="#get-started" className="bg-blue-500 text-white py-3 px-8 rounded-md hover:bg-blue-600">
+          <a 
+            href="#get-started" 
+            style={{ backgroundColor: 'rgb(47, 45, 65)', color: 'rgb(255, 255, 255)' }}  // RGB for background and text color
+            className="py-3 px-8 rounded-md hover:bg-blue-600"
+          >
             Get Started
           </a>
-          <a href="#learn-more" className="bg-gray-500 text-white py-3 px-8 rounded-md hover:bg-gray-600">
+          <a 
+            href="#learn-more" 
+            style={{ backgroundColor: 'rgb(128, 128, 128)', color: 'rgb(255, 255, 255)' }}  // RGB for background and text color
+            className="py-3 px-8 rounded-md hover:bg-gray-600"
+          >
             Learn More
           </a>
         </div>
@@ -21,7 +30,7 @@ const HomePage: React.FC = () => (
         <img 
           src="https://www.ithacajournal.com/gcdn/presto/2019/08/13/PITH/ec1cec32-9afc-4083-ac85-e5193831c031-Ithaca_Commons_throwback76.jpg" 
           alt="Ithaca Commons" 
-          className="w-full h-auto rounded-lg shadow-lg"
+          className="w-full h-auto rounded-md shadow-lg"
         />
       </div>
     </section>
@@ -38,7 +47,7 @@ const HomePage: React.FC = () => (
         <img 
           src="https://via.placeholder.com/150" 
           alt="Plan Your Journey" 
-          className="w-full h-auto mt-4 mb-4 rounded-md"
+          className="w-[400px] h-auto mt-4 mb-4 rounded-md"
         />
         <p>
           Easily map out your route, taking into account wheelchair accessibility and other essential details.
@@ -50,7 +59,7 @@ const HomePage: React.FC = () => (
         <img 
           src="https://via.placeholder.com/150" 
           alt="Turn-by-Turn Guidance" 
-          className="w-full h-auto mt-4 mb-4 rounded-md"
+          className="w-[400px] h-auto mt-4 mb-4 rounded-md"
         />
         <p>Follow the map to reach your destination seamlessly.</p>
       </div>
@@ -60,7 +69,7 @@ const HomePage: React.FC = () => (
         <img 
           src="https://via.placeholder.com/150" 
           alt="Real-Time Updates" 
-          className="w-full h-auto mt-4 mb-4 rounded-md"
+          className="w-[400px] h-auto mt-4 mb-4 rounded-md"
         />
         <p>
           Stay informed about any changes or obstacles along your path through crowd-sourced updates from the community.
@@ -71,16 +80,75 @@ const HomePage: React.FC = () => (
     {/* "Get Started" section */}
     <div id="get-started" className="p-4 text-left mt-16">
       <h1 className="text-5xl font-semibold">Get Started</h1>
-      <p className="mt-4">Here is the section where users can get started with the app.</p>
+      <p className="mt-4">Customize your experience for optimal comfort</p>
     </div>
 
-    {/* Align "Customize" section with "Get Started" */}
-    <div className="p-4 text-left mt-8">
-      <p className="text-2xl font-semibold">Customize Your Experience</p>
-      <p className="mt-4">
-        Customize your experience for optimal comfort. Click Here to create a profile.
-      </p>
+    {/* Stepper Section */}
+    {/* Stepper Section */}
+<section className="mt-16">
+  <div className="relative max-w-4xl mx-auto">
+    {/* Vertical Line */}
+    <div className="absolute left-5 top-0 h-full w-px bg-gray-300"></div>
+
+    {/* Step 1 */}
+    <div className="flex items-center mb-8 relative">
+      {/* Number 1 */}
+      <div className="flex-shrink-0 w-10 h-10 bg-gray-700 text-white rounded-md flex items-center justify-center text-lg font-semibold">
+        1
+      </div>
+
+      {/* Horizontal line to text */}
+      <div className="h-px w-16 bg-gray-300 absolute left-10 top-1/2 transform -translate-y-1/2"></div>
+
+      {/* Step content */}
+      <div className="ml-24">
+        <h2 className="text-xl font-bold">Explore</h2>
+        <p className="mt-2 text-gray-400">
+          Browse our detailed maps to discover wheelchair-friendly routes and points of interest in your city.
+        </p>
+      </div>
     </div>
+
+    {/* Step 2 */}
+    <div className="flex items-center mb-8 relative">
+      {/* Number 2 */}
+      <div className="flex-shrink-0 w-10 h-10 bg-gray-700 text-white rounded-md flex items-center justify-center text-lg font-semibold">
+        2
+      </div>
+
+      {/* Horizontal line to text */}
+      <div className="h-px w-16 bg-gray-300 absolute left-10 top-1/2 transform -translate-y-1/2"></div>
+
+      {/* Step content */}
+      <div className="ml-24">
+        <h2 className="text-xl font-bold">Plan</h2>
+        <p className="mt-2 text-gray-400">
+          Use our intuitive trip planning tools to create personalized itineraries that fit your needs.
+        </p>
+      </div>
+    </div>
+
+    {/* Step 3 */}
+    <div className="flex items-center mb-8 relative">
+      {/* Number 3 */}
+      <div className="flex-shrink-0 w-10 h-10 bg-gray-700 text-white rounded-md flex items-center justify-center text-lg font-semibold">
+        3
+      </div>
+
+      {/* Horizontal line to text */}
+      <div className="h-px w-16 bg-gray-300 absolute left-10 top-1/2 transform -translate-y-1/2"></div>
+
+      {/* Step content */}
+      <div className="ml-24">
+        <h2 className="text-xl font-bold">Navigate</h2>
+        <p className="mt-2 text-gray-400">
+          Follow turn-by-turn directions and receive real-time updates to ensure a seamless journey.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
     {/* "Learn More" section */}
     <div id="learn-more" className="p-4 mt-16">
