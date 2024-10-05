@@ -1,0 +1,32 @@
+{
+    "inaccessibility_markers": [
+        {
+            "name": "Hoy road",
+            "location": "0,0",
+            "date": "01012024",
+            "time": "5 pm ",
+            "description": "stair with no ramp"
+        },
+        {
+            "name": "hello",
+            "location": "lat=42.44406258858608&lng=-76.48262262893122",
+            "date": "date",
+            "time": "time",
+            "description": "description"
+        },
+        {
+            "name": "undefined",
+            "location": "lat=42.44605769130856&lng=-76.48549795699519",
+            "date": "date",
+            "time": "time",
+            "description": "undefined"
+        },
+        {
+            "name": "nam2",
+            "location": "lat=42.44697605057185&lng=-76.48051977706355",
+            "date": "date",
+            "time": "time",
+            "description": "des2"
+        }
+    ]
+}
