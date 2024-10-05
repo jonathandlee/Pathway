@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+      fontFamily: {
+        openSans: ['Open Sans', 'sans-serif'], // Add Open Sans as a custom font
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
