@@ -2,7 +2,7 @@
     "inaccessibility_markers": [
         {
             "name": "Hoy road",
-            "location": "0,0",
+            "location": "lat=42.44406258858608&lng=-76.48262262893122",
             "date": "01012024",
             "time": "5 pm ",
             "description": "stair with no ramp"
@@ -27,6 +27,34 @@
             "date": "date",
             "time": "time",
             "description": "des2"
+        },
+        {
+            "name": "f",
+            "location": "lat=42.43950211520666&lng=-76.48142099929255",
+            "date": "10/5/2024",
+            "time": "3:50:11 PM",
+            "description": "f"
+        },
+        {
+            "name": "f",
+            "location": "lat=42.443777568724784&lng=-76.48275137496394",
+            "date": "10/5/2024",
+            "time": "3:58:35 PM",
+            "description": "f"
+        },
+        {
+            "name": "test",
+            "location": "lat=42.44257413723736&lng=-76.4812493379156",
+            "date": "10/5/2024",
+            "time": "4:00:59 PM",
+            "description": "test"
+        },
+        {
+            "name": "kennedy",
+            "location": "lat=42.44811606403099&lng=-76.47991896224421",
+            "date": "10/5/2024",
+            "time": "4:24:54 PM",
+            "description": "bad"
         }
     ]
 }

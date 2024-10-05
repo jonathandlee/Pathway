@@ -65,11 +65,11 @@ export default function MapPage() {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null)
   const [showLegend, setShowLegend] = useState(false)
   const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
-
   const [formData, setFormData] = useState({ name: '', description: '' });
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [venues, setVenues] = useState<Venue[]>(sampleVenues);
 
 
 
@@ -107,6 +107,52 @@ export default function MapPage() {
     })
   }
 
+  const mapToVenue = (venue: any): Venue => {
+    const dummyAccessibilityFeatures = {
+      wheelchair: false,
+      hearingLoop: false,
+      brailleSignage: false,
+      guideDog: false,
+      parking: false
+    }
+    console.log(venue.location);
+    console.log(venue.position);
+    //lat=42.44605769130856&lng=-76.48549795699519
+    const longitude = venue.location.split('&')[1].split('=')[1];
+    const latitude = venue.location.split('&')[0].split('=')[1];
+    console.log(latitude, longitude);
+
+    return {
+      id: venue.id,
+      name: venue.name,
+      position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+      address: venue.name,
+      features: dummyAccessibilityFeatures,
+      rating: 0,
+      totalRatings: 0,
+      phoneNumber: "null"
+    }
+  }
+
+  // Update markers whenever `venues` changes
+  useEffect(() => {
+    if (mapRef.current) {
+      updateMarkers();
+    }
+  }, [venues]); // Re-run this effect whenever `venues` changes
+
+  const loadVenues = async () => {
+    const fetchedVenues = await fetchVenues()
+    console.log(fetchedVenues)
+    setVenues((prevVenues) => [...prevVenues, ...fetchedVenues]);
+  }
+
+  useEffect(() => {
+    console.log("venue load test");
+    loadVenues();
+    console.log(venues);
+  }, [])
+
   const updateMarkers = () => {
     console.log("hello hello helo");
     if (!mapRef.current) return
@@ -114,7 +160,7 @@ export default function MapPage() {
     markersRef.current.forEach(marker => marker.setMap(null))
     markersRef.current = []
 
-    const filteredVenues = filterVenues(sampleVenues)
+    const filteredVenues = filterVenues(venues)
     filteredVenues.forEach(venue => {
       const marker = new google.maps.Marker({
         position: venue.position,
@@ -162,6 +208,7 @@ export default function MapPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(venues);
 
     console.log("what!!");
     console.log(lat);
@@ -204,6 +251,8 @@ export default function MapPage() {
         // Handle error
         console.error('Failed to submit:', response.statusText);
       }
+
+      updateMarkers();
     } catch (error) {
       console.error('Error:', error);
     }
@@ -214,6 +263,25 @@ export default function MapPage() {
     console.log("Modal state changed:", isModalOpen);
     console.log(isModalOpen);
   }, [isModalOpen]);
+
+  const fetchVenues = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/return-locations/')
+      const data = await response.json()
+      console.log(data)
+      const dataVenues = [];
+
+      data.inaccessibility_markers.forEach((venue) => {
+        dataVenues.push(mapToVenue(venue));
+      });
+      console.log("test 2");
+
+      return dataVenues;
+    } catch (error) {
+      console.error('Failed to fetch venues:', error)
+      return []
+    }
+  }
 
   useEffect(() => {
     console.log("hello");
