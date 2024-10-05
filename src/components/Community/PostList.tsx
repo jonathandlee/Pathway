@@ -1,8 +1,7 @@
 // src/components/Community/PostList.tsx
 import React from 'react';
 import type { Post } from '@/types';
-import PostItem from './postItem';
-
+import PostItem from './PostItem';
 interface PostListProps {
   posts: Post[];
 }

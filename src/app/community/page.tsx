@@ -2,9 +2,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import PostList from '@/components/Community/postList';
-import CreatePostForm from '@/components/Community/createPostForm';
+import PostList from '@/components/Community/PostList';
+import CreatePostForm from '@/components/Community/CreatePostForm';
 import type { Post } from '@/types';
+
 
 const CommunityPage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);

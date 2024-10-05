@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import type { User } from '@/types';
 
+
 interface CreatePostFormProps {
   onPostCreated: () => void;
 }
@@ -13,21 +14,21 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onPostCreated }) => {
   const [submitting, setSubmitting] = useState(false);
 
   // For simplicity, using a mock user
-  const user: User = { id: 'user1', name: 'Alex' };
+  const user: User = { id: 'user2', name: 'Aryan',email:"alex@dummy.com" };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
-
+  
     setSubmitting(true);
-
+  
     try {
       const response = await fetch('/api/community/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ author: user, content }),
       });
-
+  
       if (response.ok) {
         setContent('');
         onPostCreated();
