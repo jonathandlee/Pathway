@@ -13,9 +13,8 @@ const HomePage: React.FC = () => (
         {/* Buttons below the text */}
         <div className="flex space-x-4 mt-4">
           <a 
-            href="#get-started" 
-            style={{ backgroundColor: 'rgb(47, 45, 65)', color: 'rgb(255, 255, 255)', fontFamily: 'Open Sans, sans-serif' }}  
-            className="py-3 px-8 rounded-md hover:bg-blue-600"
+            href="#get-started"  
+            className="py-3 px-8 rounded-md bg-gray-700"
           >
             Get Started
           </a>
@@ -40,8 +39,8 @@ const HomePage: React.FC = () => (
     </section>
 
 
-<div className='bg-gray-400 w-screen text-black px-5'>
-    <div id="Accessible Routes" className="p-4 text-left mt-40">
+<div className='bg-gray-300 w-screen text-black px-5'>
+    <div id="Accessible Routes" className="p-4 pt-10 text-left mt-40">
       <h1 className="text-5xl font-semibold">Accessible Routes</h1>
     </div>
 
@@ -70,7 +69,7 @@ const HomePage: React.FC = () => (
         <p style={{ fontFamily: 'Open Sans, sans-serif' }}>Follow the map to reach your destination seamlessly.</p>
       </div>
       {/* Real-Time Updates */}
-      <div className="p-4 w-1/3 break-words">
+      <div className="p-4 pb-10 w-1/3 break-words">
         <h2 className="text-3xl font-semibold">Real-Time Updates</h2>
         <img 
           src="https://via.placeholder.com/150" 
@@ -83,10 +82,6 @@ const HomePage: React.FC = () => (
       </div>
     </div>
     </div>
-
-
-
-
 
     {/* Container for "Get Started" and Stepper Section */}
     <div className="flex flex-col md:flex-row items-center justify-center mt-40">

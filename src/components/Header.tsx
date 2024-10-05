@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 const Header: React.FC = () => (
   <header 
-    style={{ backgroundColor: 'rgb(47, 45, 65)', color: 'rgb(255, 255, 255)' }} 
-    className="sticky top-0 z-50 font-poppins" // Use the Poppins font globally in the header
+    style={{color: 'rgb(255, 255, 255)' }} 
+    className="sticky top-0 z-50 bg-gray-700"
   >
     <div className="container mx-auto flex items-center justify-between p-4">
       <Link href="/" className="text-xl font-bold ml-4">
