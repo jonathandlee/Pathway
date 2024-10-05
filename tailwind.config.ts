@@ -12,6 +12,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        openSans: ['Open Sans', 'sans-serif'], // Add Open Sans as a custom font
+      },
     },
   },
   plugins: [],
