@@ -9,9 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-      fontFamily: {
-        openSans: ['Open Sans', 'sans-serif'], // Add Open Sans as a custom font
-      },
+  		fontFamily: {
+  			openSans: ['Open Sans', 'sans-serif']
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -58,6 +58,19 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		animation: {
+  			grid: 'grid 15s linear infinite'
+  		},
+  		keyframes: {
+  			grid: {
+  				'0%': {
+  					transform: 'translateY(-50%)'
+  				},
+  				'100%': {
+  					transform: 'translateY(0)'
+  				}
+  			}
   		}
   	}
   },

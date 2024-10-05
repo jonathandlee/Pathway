@@ -1,9 +1,11 @@
+"use client"
 import Link from 'next/link';
 
 const HomePage: React.FC = () => (
-  <div className="max-w-screen-full mx-auto p-8">
+  
+  <div className="max-w-screen-full mx-auto bg-gray-800 text-white">
     {/* Flex layout for larger text and image side-by-side */}
-    <section className="my-24 flex flex-col md:flex-row items-center">
+    <section className="mb-24 flex flex-col p-8 md:flex-row items-center">
       {/* Left side with much larger text */}
       <div className="md:w-1/2 p-4 text-left">
         <h1 className="text-7xl font-bold mb-8">Explore Your City with Confidence</h1>
@@ -37,6 +39,8 @@ const HomePage: React.FC = () => (
       </div>
     </section>
 
+
+<div className='bg-gray-400 w-screen text-black px-5'>
     <div id="Accessible Routes" className="p-4 text-left mt-40">
       <h1 className="text-5xl font-semibold">Accessible Routes</h1>
     </div>
@@ -78,6 +82,11 @@ const HomePage: React.FC = () => (
         </p>
       </div>
     </div>
+    </div>
+
+
+
+
 
     {/* Container for "Get Started" and Stepper Section */}
     <div className="flex flex-col md:flex-row items-center justify-center mt-40">
@@ -160,12 +169,14 @@ const HomePage: React.FC = () => (
         </div>
       </section>
     </div>
+   
 
     {/* "Learn More" section */}
     <div id="learn-more" className="p-4 mt-40">
       <h1 className="text-5xl font-semibold">Learn More</h1>
       <p style={{ fontFamily: 'Open Sans, sans-serif' }} className="mt-4">More details about the application and its features.</p>
     </div>
+    
   </div>
 );
 
