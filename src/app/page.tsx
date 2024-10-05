@@ -105,7 +105,7 @@ const HomePage: React.FC = () => (
           <div className="absolute left-5 top-0 h-full w-px bg-gray-300"></div>
 
           {/* Step 1 */}
-          <Link href="/map">
+          <Link href="/profile">
             <div className="flex items-center mb-8 relative cursor-pointer">
               {/* Number 1 */}
               <div className="flex-shrink-0 w-10 h-10 bg-gray-700 text-white rounded-md flex items-center justify-center text-lg font-semibold">
@@ -126,7 +126,7 @@ const HomePage: React.FC = () => (
           </Link>
 
           {/* Step 2 */}
-          <Link href="/community">
+          <Link href="/map">
             <div className="flex items-center mb-8 relative cursor-pointer">
               {/* Number 2 */}
               <div className="flex-shrink-0 w-10 h-10 bg-gray-700 text-white rounded-md flex items-center justify-center text-lg font-semibold">
@@ -147,7 +147,7 @@ const HomePage: React.FC = () => (
           </Link>
 
           {/* Step 3 */}
-          <Link href="/profile">
+          <Link href="/community">
             <div className="flex items-center mb-8 relative cursor-pointer">
               {/* Number 3 */}
               <div className="flex-shrink-0 w-10 h-10 bg-gray-700 text-white rounded-md flex items-center justify-center text-lg font-semibold">
