@@ -2,6 +2,7 @@ from fastapi import FastAPI, Form
 import sys
 import os 
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))  # Add the parent directory to the path
 
@@ -10,6 +11,19 @@ from database.database import read_from_server
 
 
 app = FastAPI()
+
+# Allow requests from your frontend's origin
+origins = [
+    "http://localhost:3000",  # Your React app's URL
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows specific origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 # API to upload string data, calls a function in another module
 @app.post("/upload-string/")

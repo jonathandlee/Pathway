@@ -7,6 +7,10 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
+import React from 'react';
+import Modal from './modal'
+import { stringify } from 'querystring'
+
 
 // Define types for accessibility features
 interface AccessibilityFeatures {
@@ -61,7 +65,14 @@ export default function MapPage() {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null)
   const [showLegend, setShowLegend] = useState(false)
   const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
-  
+
+  const [formData, setFormData] = useState({ name: '', description: '' });
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+
   const [filters, setFilters] = useState<AccessibilityFeatures>({
     wheelchair: false,
     hearingLoop: false,
@@ -97,6 +108,7 @@ export default function MapPage() {
   }
 
   const updateMarkers = () => {
+    console.log("hello hello helo");
     if (!mapRef.current) return
 
     markersRef.current.forEach(marker => marker.setMap(null))
@@ -113,6 +125,8 @@ export default function MapPage() {
 
       marker.addListener('click', () => {
         setSelectedVenue(venue)
+
+        console.log("hello 2 ");
         if (infoWindowRef.current) {
           infoWindowRef.current.close()
         }
@@ -141,7 +155,68 @@ export default function MapPage() {
     `
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("what!!");
+    console.log(lat);
+    console.log(lng);
+    //const formData = new FormData();
+    // formData.set('name', "hello");
+
+    const formDataToSend = new FormData();
+    const now = new Date();
+
+    // Get specific components
+    const currentDate = now.toLocaleDateString(); // e.g., "10/5/2024"
+    const currentTime = now.toLocaleTimeString(); // e.g., "3:30:15 PM"
+    // Append name and description from the form data state
+    formDataToSend.append('name', formData.name); // Correctly append name
+    formDataToSend.append('description', formData.description); // Correctly append description
+    formDataToSend.append('location', JSON.stringify({ lat: lat, lng: lng })); // Append location as JSON string
+
+    formDataToSend.set('location', stringify({ lat: lat, lng: lng }));
+    formDataToSend.set('date', currentDate);
+    formDataToSend.set('time', currentTime);
+    // formData.set('description', "description");
+
+    // formData.set('name', formData.name); // This line is incorrect and should be removed
+    //setFormData({ name: '', description: '' });
+
+    // Send a POST request to your API
+    try {
+      const response = await fetch('http://localhost:8000/upload-string/', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        // Handle success (e.g., close modal, clear form, etc.)
+        setIsModalOpen(false);
+        setFormData({ name: '', description: '' });
+        console.log("Submission successful!");
+      } else {
+        // Handle error
+        console.error('Failed to submit:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
   useEffect(() => {
+    console.log("Modal state changed:", isModalOpen);
+    console.log(isModalOpen);
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    console.log("hello");
     if (isLoaded && !mapRef.current) {
       mapRef.current = new google.maps.Map(document.getElementById('map')!, {
         center: { lat: 42.44233661513344, lng: -76.48545504165095 },
@@ -156,9 +231,23 @@ export default function MapPage() {
         ],
       })
 
+      // Add right-click event listener
+      mapRef.current.addListener('rightclick', (event: { latLng: { lat: () => any; lng: () => any } }) => {
+        const lat = event.latLng.lat();
+        const lng = event.latLng.lng();
+        console.log(`Right clicked at: Latitude: ${lat}, Longitude: ${lng}`);
+        console.log("hello 1 ");
+        setLat(lat);
+        setLng(lng);
+
+        setIsModalOpen(true);
+        console.log(isModalOpen);
+
+      });
+
       const input = document.getElementById('pac-input') as HTMLInputElement
       searchBoxRef.current = new google.maps.places.SearchBox(input)
-      
+
       searchBoxRef.current.addListener('places_changed', () => {
         const places = searchBoxRef.current?.getPlaces()
         if (!places || places.length === 0) return
@@ -246,8 +335,8 @@ export default function MapPage() {
                 <Checkbox
                   id="wheelchair"
                   checked={filters.wheelchair}
-                  onCheckedChange={(checked) => 
-                    setFilters({...filters, wheelchair: checked as boolean})
+                  onCheckedChange={(checked) =>
+                    setFilters({ ...filters, wheelchair: checked as boolean })
                   }
                 />
                 <label
@@ -265,8 +354,8 @@ export default function MapPage() {
                 <Checkbox
                   id="hearingLoop"
                   checked={filters.hearingLoop}
-                  onCheckedChange={(checked) => 
-                    setFilters({...filters, hearingLoop: checked as boolean})
+                  onCheckedChange={(checked) =>
+                    setFilters({ ...filters, hearingLoop: checked as boolean })
                   }
                 />
                 <label
@@ -284,8 +373,8 @@ export default function MapPage() {
                 <Checkbox
                   id="brailleSignage"
                   checked={filters.brailleSignage}
-                  onCheckedChange={(checked) => 
-                    setFilters({...filters, brailleSignage: checked as boolean})
+                  onCheckedChange={(checked) =>
+                    setFilters({ ...filters, brailleSignage: checked as boolean })
                   }
                 />
                 <label
@@ -332,6 +421,42 @@ export default function MapPage() {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Venue Details Modal */}
+      {isModalOpen && (
+        <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded">
+            <h2 className="text-lg">Add Venue</h2>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label>Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <label>Description:</label>
+                <input
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <button type="submit">Submit  </button>
+              <button type="button" onClick={() => {
+                setIsModalOpen(false),
+                  setFormData({ name: '', description: '' })
+
+              }}>  Cancel</button>
+            </form>
+          </div>
+        </div>
       )}
 
       {/* Help Alert */}
