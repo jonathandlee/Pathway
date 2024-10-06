@@ -66,7 +66,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 min-h-screen bg-gray-200">
       {/* Header Section */}
       <div className="profile-header flex items-center p-4 bg-white shadow rounded">
         <img
@@ -196,7 +196,7 @@ const ProfilePage = () => {
         ) : (
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-gray-600 text-white px-4 py-2 rounded"
           >
             Edit Profile
           </button>

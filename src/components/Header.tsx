@@ -1,13 +1,13 @@
-// src/components/Header.tsx
 import Link from 'next/link';
 
 const Header: React.FC = () => (
   <header 
-    style={{color: 'rgb(255, 255, 255)' }} 
+    style={{ color: 'rgb(255, 255, 255)' }} 
     className="sticky top-0 z-50 bg-gray-700"
   >
-    <div className="container mx-auto flex items-center justify-between p-4">
-      <Link href="/" className="text-xl font-bold ml-4">
+    {/* Remove the container class and adjust padding */}
+    <div className="w-full flex items-center justify-between p-4 pl-10"> {/* Reduced left padding */}
+      <Link href="/" className="text-xl font-bold">
         CityExplorer
       </Link>
       <nav>
