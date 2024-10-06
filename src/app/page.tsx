@@ -24,9 +24,9 @@ const HomePage: React.FC = () => (
       {/* Right side with a larger image */}
       <div className="md:w-1/2 p-4">
         <img 
-          src="https://www.ithacajournal.com/gcdn/presto/2019/08/13/PITH/ec1cec32-9afc-4083-ac85-e5193831c031-Ithaca_Commons_throwback76.jpg" 
+          src="https://images.unsplash.com/photo-1655491371594-45cc325c6d69?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
           alt="Ithaca Commons" 
-          className="w-full h-auto rounded-md shadow-lg"
+          className="w-full h-[800px] rounded-md shadow-lg"
         />
       </div>
     </section>
@@ -43,9 +43,10 @@ const HomePage: React.FC = () => (
       <div className="p-4 w-1/3 break-words">
         <h2 className="text-3xl font-semibold">Plan Your Journey</h2>
         <img 
-          src="https://via.placeholder.com/150" 
+          src="images/images/test2.png" 
           alt="Plan Your Journey" 
           className="w-[400px] h-auto mt-4 mb-4 rounded-md"
+          style={{ width: '600px', height: '400px' }}
         />
         <p style={{ fontFamily: 'Open Sans, sans-serif' }}>
           Easily map out your route, taking into account essential accessibility details
