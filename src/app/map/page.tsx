@@ -7,10 +7,19 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import React from 'react';
-import Modal from './modal'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import React from 'react'
 import { stringify } from 'querystring'
-
 
 // Define types for accessibility features
 interface AccessibilityFeatures {
@@ -24,6 +33,7 @@ interface AccessibilityFeatures {
 interface Venue {
   id: string
   name: string
+  description: string // Added this line
   position: google.maps.LatLngLiteral
   address: string
   features: AccessibilityFeatures
@@ -50,9 +60,9 @@ const sampleVenues: Venue[] = [
     },
     rating: 4.5,
     totalRatings: 128,
-    phoneNumber: '+XX XXX XXX XXXX'
+    phoneNumber: '+XX XXX XXX XXXX',
+    description: "Accessible cafe"
   },
-  // Add more sample venues as needed
 ]
 
 export default function MapPage() {
@@ -65,13 +75,19 @@ export default function MapPage() {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null)
   const [showLegend, setShowLegend] = useState(false)
   const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
-  const [formData, setFormData] = useState({ name: '', description: '' });
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [venues, setVenues] = useState<Venue[]>(sampleVenues);
+  const [lat, setLat] = useState<number | null>(null)
+  const [lng, setLng] = useState<number | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [venues, setVenues] = useState<Venue[]>(sampleVenues)
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    notes: '',
+    address:'',
+    wheelchair:false,
+    hearingLoop:false
 
-
+  })
 
   const [filters, setFilters] = useState<AccessibilityFeatures>({
     wheelchair: false,
@@ -115,18 +131,15 @@ export default function MapPage() {
       guideDog: false,
       parking: false
     }
-    console.log(venue.location);
-    console.log(venue.position);
-    //lat=42.44605769130856&lng=-76.48549795699519
-    const longitude = venue.location.split('&')[1].split('=')[1];
-    const latitude = venue.location.split('&')[0].split('=')[1];
-    console.log(latitude, longitude);
-
+    const longitude = venue.location.split('&')[1].split('=')[1]
+    const latitude = venue.location.split('&')[0].split('=')[1]
+  
     return {
       id: venue.id,
       name: venue.name,
+      description: venue.description, // Added this line
       position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
-      address: venue.name,
+      address: venue.address,
       features: dummyAccessibilityFeatures,
       rating: 0,
       totalRatings: 0,
@@ -134,27 +147,22 @@ export default function MapPage() {
     }
   }
 
-  // Update markers whenever `venues` changes
   useEffect(() => {
     if (mapRef.current) {
-      updateMarkers();
+      updateMarkers()
     }
-  }, [venues]); // Re-run this effect whenever `venues` changes
+  }, [venues])
 
   const loadVenues = async () => {
     const fetchedVenues = await fetchVenues()
-    console.log(fetchedVenues)
-    setVenues((prevVenues) => [...prevVenues, ...fetchedVenues]);
+    setVenues((prevVenues) => [...prevVenues, ...fetchedVenues])
   }
 
   useEffect(() => {
-    console.log("venue load test");
-    loadVenues();
-    console.log(venues);
+    loadVenues()
   }, [])
 
   const updateMarkers = () => {
-    console.log("hello hello helo");
     if (!mapRef.current) return
 
     markersRef.current.forEach(marker => marker.setMap(null))
@@ -172,7 +180,6 @@ export default function MapPage() {
       marker.addListener('click', () => {
         setSelectedVenue(venue)
 
-        console.log("hello 2 ");
         if (infoWindowRef.current) {
           infoWindowRef.current.close()
         }
@@ -191,6 +198,7 @@ export default function MapPage() {
       <div class="p-4 max-w-sm">
         <h3 class="font-bold text-lg">${venue.name}</h3>
         <p class="text-sm text-gray-600">${venue.address}</p>
+        <p class="text-sm mt-2">${venue.description}</p> <!-- Added this line -->
         <div class="mt-2">
           <div class="flex items-center">
             <span class="text-yellow-500">★</span>
@@ -201,82 +209,56 @@ export default function MapPage() {
     `
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(venues);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("submit wots");
+    const formDataToSend = new FormData()
+    const now = new Date()
+    const currentDate = now.toLocaleDateString()
+    const currentTime = now.toLocaleTimeString()
 
-    console.log("what!!");
-    console.log(lat);
-    console.log(lng);
-    //const formData = new FormData();
-    // formData.set('name', "hello");
+    formDataToSend.append('name', formData.name)
+    formDataToSend.append('description', formData.description)
+    formDataToSend.append('location', `lat=${lat}&lng=${lng}`)
+    formDataToSend.append('address', formData.address)
+    formDataToSend.append('date', currentDate)
+    formDataToSend.append('time', currentTime)
 
-    const formDataToSend = new FormData();
-    const now = new Date();
-
-    // Get specific components
-    const currentDate = now.toLocaleDateString(); // e.g., "10/5/2024"
-    const currentTime = now.toLocaleTimeString(); // e.g., "3:30:15 PM"
-    // Append name and description from the form data state
-    formDataToSend.append('name', formData.name); // Correctly append name
-    formDataToSend.append('description', formData.description); // Correctly append description
-    formDataToSend.append('location', JSON.stringify({ lat: lat, lng: lng })); // Append location as JSON string
-
-    formDataToSend.set('location', stringify({ lat: lat, lng: lng }));
-    formDataToSend.set('date', currentDate);
-    formDataToSend.set('time', currentTime);
-    // formData.set('description', "description");
-
-    // formData.set('name', formData.name); // This line is incorrect and should be removed
-    //setFormData({ name: '', description: '' });
-
-    // Send a POST request to your API
     try {
       const response = await fetch('http://localhost:8000/upload-string/', {
         method: 'POST',
         body: formDataToSend,
-      });
+      })
 
       if (response.ok) {
-        // Handle success (e.g., close modal, clear form, etc.)
-        setIsModalOpen(false);
-        setFormData({ name: '', description: '' });
-        console.log("Submission successful!");
+        setIsModalOpen(false)
+        setFormData({ name: '', description: '', notes: '', address: '',wheelchair:false, hearingLoop:false })
+        console.log("Submission successful!")
+        loadVenues() // Refresh venues
       } else {
-        // Handle error
-        console.error('Failed to submit:', response.statusText);
+        console.error('Failed to submit:', response.statusText)
       }
-
-      updateMarkers();
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error)
     }
-  };
-
-
-  useEffect(() => {
-    console.log("Modal state changed:", isModalOpen);
-    console.log(isModalOpen);
-  }, [isModalOpen]);
+  }
 
   const fetchVenues = async () => {
     try {
       const response = await fetch('http://localhost:8000/return-locations/')
       const data = await response.json()
-      console.log(data)
-      const dataVenues = [];
+      const dataVenues: Venue[] = []
 
-      data.inaccessibility_markers.forEach((venue) => {
-        dataVenues.push(mapToVenue(venue));
-      });
-      console.log("test 2");
+      data.inaccessibility_markers.forEach((venue: any) => {
+        dataVenues.push(mapToVenue(venue))
+      })
 
-      return dataVenues;
+      return dataVenues
     } catch (error) {
       console.error('Failed to fetch venues:', error)
       return []
@@ -284,7 +266,6 @@ export default function MapPage() {
   }
 
   useEffect(() => {
-    console.log("hello");
     if (isLoaded && !mapRef.current) {
       mapRef.current = new google.maps.Map(document.getElementById('map')!, {
         center: { lat: 42.44233661513344, lng: -76.48545504165095 },
@@ -299,19 +280,15 @@ export default function MapPage() {
         ],
       })
 
-      // Add right-click event listener
-      mapRef.current.addListener('rightclick', (event: { latLng: { lat: () => any; lng: () => any } }) => {
-        const lat = event.latLng.lat();
-        const lng = event.latLng.lng();
-        console.log(`Right clicked at: Latitude: ${lat}, Longitude: ${lng}`);
-        console.log("hello 1 ");
-        setLat(lat);
-        setLng(lng);
-
-        setIsModalOpen(true);
-        console.log(isModalOpen);
-
-      });
+      mapRef.current.addListener('rightclick', (event: google.maps.MapMouseEvent) => {
+        if (event.latLng) {
+          const lat = event.latLng.lat()
+          const lng = event.latLng.lng()
+          setLat(lat)
+          setLng(lng)
+          setIsModalOpen(true)
+        }
+      })
 
       const input = document.getElementById('pac-input') as HTMLInputElement
       searchBoxRef.current = new google.maps.places.SearchBox(input)
@@ -492,43 +469,105 @@ export default function MapPage() {
       )}
 
       {/* Venue Details Modal */}
-      {isModalOpen && (
-        <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded">
-            <h2 className="text-lg">Add Venue</h2>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label>Name:</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <label>Description:</label>
-                <input
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button type="submit">Submit  </button>
-              <button type="button" onClick={() => {
-                setIsModalOpen(false),
-                  setFormData({ name: '', description: '' })
-
-              }}>  Cancel</button>
-            </form>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+  <DialogContent className="sm:max-w-[425px] bg-white">
+    <DialogHeader>
+      <DialogTitle>Report Inaccessible Location</DialogTitle>
+      <DialogDescription>
+        Help others by sharing details about inaccessible locations you've encountered.
+      </DialogDescription>
+    </DialogHeader>
+    <form onSubmit={handleSubmit}>
+      <div className="grid gap-4 py-4">
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="name" className="text-right">
+            Describe location
+          </Label>
+          <Input
+            id="name"
+            name="name"
+            placeholder="Enter description"
+            className="col-span-3"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="description" className="text-right">
+            Address
+          </Label>
+          <Textarea
+            id="address"
+            name="address"
+            placeholder="Enter location"
+            className="col-span-3"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="notes" className="text-right">
+            Additional Notes
+          </Label>
+          <Textarea
+            id="notes"
+            name="notes"
+            placeholder="Any additional information (optional)"
+            className="col-span-3"
+            value={formData.notes}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="text-right">Location</Label>
+          <div className="col-span-3 text-sm text-gray-500">
+            Latitude: {lat?.toFixed(6)}, Longitude: {lng?.toFixed(6)}
           </div>
         </div>
-      )}
+
+        {/* Checkboxes for Wheelchair and Hearing Loop */}
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="text-right">Wheelchair</Label>
+          <input
+            type="checkbox"
+            name="wheelchair"
+            className="col-span-3"
+
+            onChange={handleChange}
+          />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="text-right">Hearing Loop</Label>
+          <input
+            type="checkbox"
+            name="hearingLoop"
+            className="col-span-3"
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      <DialogFooter>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => {
+            setIsModalOpen(false);
+            setFormData({ name: '', description: '', notes: '', address: '', wheelchair: false, hearingLoop: false });
+          }}
+        >
+          Cancel
+        </Button>
+        <Button type="submit">Submit Report</Button>
+      </DialogFooter>
+    </form>
+  </DialogContent>
+</Dialog>
 
       {/* Help Alert */}
-      <Alert className="absolute bottom-4 left-4 max-w-md">
+      <Alert className="absolute bottom-4 left-4 max-w-md bg-white">
         <Info className="h-4 w-4" />
         <AlertTitle>Quick Tips</AlertTitle>
         <AlertDescription>

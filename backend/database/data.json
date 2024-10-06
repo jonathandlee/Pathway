@@ -1,60 +1,20 @@
 {
     "inaccessibility_markers": [
         {
-            "name": "Hoy road",
-            "location": "lat=42.44406258858608&lng=-76.48262262893122",
-            "date": "01012024",
-            "time": "5 pm ",
-            "description": "stair with no ramp"
-        },
-        {
-            "name": "hello",
-            "location": "lat=42.44406258858608&lng=-76.48262262893122",
-            "date": "date",
-            "time": "time",
-            "description": "description"
-        },
-        {
-            "name": "undefined",
-            "location": "lat=42.44605769130856&lng=-76.48549795699519",
-            "date": "date",
-            "time": "time",
-            "description": "undefined"
-        },
-        {
-            "name": "nam2",
-            "location": "lat=42.44697605057185&lng=-76.48051977706355",
-            "date": "date",
-            "time": "time",
-            "description": "des2"
-        },
-        {
-            "name": "f",
-            "location": "lat=42.43950211520666&lng=-76.48142099929255",
+            "name": "Not wheelchair accessible",
+            "location": "lat=42.44400554426999&lng=-76.48466057340366",
             "date": "10/5/2024",
-            "time": "3:50:11 PM",
-            "description": "f"
+            "time": "8:46:39 PM",
+            "description": "",
+            "address": "Hollister Hall"
         },
         {
-            "name": "f",
-            "location": "lat=42.443777568724784&lng=-76.48275137496394",
+            "name": "No wheelchair support",
+            "location": "lat=42.44475878208129&lng=-76.4841378843613",
             "date": "10/5/2024",
-            "time": "3:58:35 PM",
-            "description": "f"
-        },
-        {
-            "name": "test",
-            "location": "lat=42.44257413723736&lng=-76.4812493379156",
-            "date": "10/5/2024",
-            "time": "4:00:59 PM",
-            "description": "test"
-        },
-        {
-            "name": "kennedy",
-            "location": "lat=42.44811606403099&lng=-76.47991896224421",
-            "date": "10/5/2024",
-            "time": "4:24:54 PM",
-            "description": "bad"
+            "time": "8:50:37 PM",
+            "description": "",
+            "address": "Olin Hall"
         }
     ]
 }

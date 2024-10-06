@@ -40,23 +40,29 @@ def upload_accessibility_to_server(content):
    
 
 def upload_to_server(content):
-  try:
-        with open(filepath, 'r') as json_file:
-            data = json.load(json_file)
+    filepath = 'venues.json'  # Define the file path if not already defined
 
+    try:
+        # Check if the file exists and has content
+        if os.path.exists(filepath) and os.path.getsize(filepath) > 0:
+            with open(filepath, 'r') as json_file:
+                data = json.load(json_file)
+        else:
+            # Initialize data if file doesn't exist or is empty
+            data = {"inaccessibility_markers": []}
+
+        # Ensure the key exists and is a list
         if "inaccessibility_markers" in data and isinstance(data["inaccessibility_markers"], list):
             data["inaccessibility_markers"].append(content)
-        elif "inaccessibility_markers" not in data:
-            data["inaccessibility_markers"] = [content]
         else:
-            print("The JSON structure is not valid for appending.")
-        print(data)
+            data["inaccessibility_markers"] = [content]
+
         with open(filepath, 'w') as json_file:
             json.dump(data, json_file, indent=4)
-        
+
         print("Data successfully appended.")
         return True
-    
-  except Exception as e:
-      print(f"An error occurred: {e}")
-      return False
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
