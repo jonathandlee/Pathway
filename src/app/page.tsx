@@ -14,7 +14,7 @@ const HomePage: React.FC = () => (
         <div className="flex space-x-4 mt-4">
           <a 
             href="#get-started"  
-            className="py-3 px-8 rounded-md bg-gray-700"
+            className="py-3 px-8 rounded-md bg-gray-700 font-semibold"
           >
             Get Started
           </a>
@@ -77,7 +77,7 @@ const HomePage: React.FC = () => (
     </div>
 
     {/* Container for "Get Started" and Stepper Section */}
-    <div className="flex flex-col md:flex-row items-center justify-center mt-40">
+    <div className="flex flex-col md:flex-row items-center justify-center mt-40 pb-40">
       {/* "Get Started" section */}
       <div id="get-started" className="p-4 text-left md:w-auto flex justify-center">
         <div>
