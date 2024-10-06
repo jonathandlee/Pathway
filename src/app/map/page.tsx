@@ -83,9 +83,9 @@ export default function MapPage() {
     name: '',
     description: '',
     notes: '',
-    address:'',
-    wheelchair:false,
-    hearingLoop:false
+    address: '',
+    wheelchair: false,
+    hearingLoop: false
 
   })
 
@@ -125,15 +125,15 @@ export default function MapPage() {
 
   const mapToVenue = (venue: any): Venue => {
     const dummyAccessibilityFeatures = {
-      wheelchair: false,
-      hearingLoop: false,
+      wheelchair: venue.wheelchair,
+      hearingLoop: venue.hearingloop,
       brailleSignage: false,
       guideDog: false,
       parking: false
     }
     const longitude = venue.location.split('&')[1].split('=')[1]
     const latitude = venue.location.split('&')[0].split('=')[1]
-  
+
     return {
       id: venue.id,
       name: venue.name,
@@ -223,11 +223,16 @@ export default function MapPage() {
     const currentTime = now.toLocaleTimeString()
 
     formDataToSend.append('name', formData.name)
-    formDataToSend.append('description', formData.description)
+    formDataToSend.append('description', formData.notes)
     formDataToSend.append('location', `lat=${lat}&lng=${lng}`)
     formDataToSend.append('address', formData.address)
     formDataToSend.append('date', currentDate)
     formDataToSend.append('time', currentTime)
+    formDataToSend.append('wheelchair', formData.wheelchair ? 'true' : 'false')
+    formDataToSend.append('hearingLoop', formData.hearingLoop ? 'true' : 'false')
+    console.log(formData.wheelchair);
+    console.log(formData.hearingLoop);
+    console.log(formData.wheelchair != false);
 
     try {
       const response = await fetch('http://localhost:8000/upload-string/', {
@@ -237,7 +242,7 @@ export default function MapPage() {
 
       if (response.ok) {
         setIsModalOpen(false)
-        setFormData({ name: '', description: '', notes: '', address: '',wheelchair:false, hearingLoop:false })
+        setFormData({ name: '', description: '', notes: '', address: '', wheelchair: false, hearingLoop: false })
         console.log("Submission successful!")
         loadVenues() // Refresh venues
       } else {
@@ -414,24 +419,7 @@ export default function MapPage() {
                 </label>
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="brailleSignage"
-                  checked={filters.brailleSignage}
-                  onCheckedChange={(checked) =>
-                    setFilters({ ...filters, brailleSignage: checked as boolean })
-                  }
-                />
-                <label
-                  htmlFor="brailleSignage"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  <div className="flex items-center space-x-2">
-                    <Eye className="w-4 h-4" />
-                    <span>Braille Signage</span>
-                  </div>
-                </label>
-              </div>
+
             </CardContent>
           )}
         </Card>
@@ -470,101 +458,101 @@ export default function MapPage() {
 
       {/* Venue Details Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-  <DialogContent className="sm:max-w-[425px] bg-white">
-    <DialogHeader>
-      <DialogTitle>Report Inaccessible Location</DialogTitle>
-      <DialogDescription>
-        Help others by sharing details about inaccessible locations you've encountered.
-      </DialogDescription>
-    </DialogHeader>
-    <form onSubmit={handleSubmit}>
-      <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
-            Describe location
-          </Label>
-          <Input
-            id="name"
-            name="name"
-            placeholder="Enter description"
-            className="col-span-3"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="description" className="text-right">
-            Address
-          </Label>
-          <Textarea
-            id="address"
-            name="address"
-            placeholder="Enter location"
-            className="col-span-3"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="notes" className="text-right">
-            Additional Notes
-          </Label>
-          <Textarea
-            id="notes"
-            name="notes"
-            placeholder="Any additional information (optional)"
-            className="col-span-3"
-            value={formData.notes}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label className="text-right">Location</Label>
-          <div className="col-span-3 text-sm text-gray-500">
-            Latitude: {lat?.toFixed(6)}, Longitude: {lng?.toFixed(6)}
-          </div>
-        </div>
+        <DialogContent className="sm:max-w-[425px] bg-white">
+          <DialogHeader>
+            <DialogTitle>Report Inaccessible Location</DialogTitle>
+            <DialogDescription>
+              Help others by sharing details about inaccessible locations you've encountered.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Describe location
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="Enter description"
+                  className="col-span-3"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="description" className="text-right">
+                  Address
+                </Label>
+                <Textarea
+                  id="address"
+                  name="address"
+                  placeholder="Enter location"
+                  className="col-span-3"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="notes" className="text-right">
+                  Additional Notes
+                </Label>
+                <Textarea
+                  id="notes"
+                  name="notes"
+                  placeholder="Any additional information (optional)"
+                  className="col-span-3"
+                  value={formData.notes}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label className="text-right">Location</Label>
+                <div className="col-span-3 text-sm text-gray-500">
+                  Latitude: {lat?.toFixed(6)}, Longitude: {lng?.toFixed(6)}
+                </div>
+              </div>
 
-        {/* Checkboxes for Wheelchair and Hearing Loop */}
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label className="text-right">Wheelchair</Label>
-          <input
-            type="checkbox"
-            name="wheelchair"
-            className="col-span-3"
+              {/* Checkboxes for Wheelchair and Hearing Loop */}
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label className="text-right">Wheelchair</Label>
+                <input
+                  type="checkbox"
+                  name="wheelchair"
+                  className="col-span-3"
 
-            onChange={handleChange}
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label className="text-right">Hearing Loop</Label>
-          <input
-            type="checkbox"
-            name="hearingLoop"
-            className="col-span-3"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label className="text-right">Hearing Loop</Label>
+                <input
+                  type="checkbox"
+                  name="hearingLoop"
+                  className="col-span-3"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
 
-      <DialogFooter>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => {
-            setIsModalOpen(false);
-            setFormData({ name: '', description: '', notes: '', address: '', wheelchair: false, hearingLoop: false });
-          }}
-        >
-          Cancel
-        </Button>
-        <Button type="submit">Submit Report</Button>
-      </DialogFooter>
-    </form>
-  </DialogContent>
-</Dialog>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setFormData({ name: '', description: '', notes: '', address: '', wheelchair: false, hearingLoop: false });
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Submit Report</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* Help Alert */}
       <Alert className="absolute bottom-4 left-4 max-w-md bg-white">
