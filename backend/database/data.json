@@ -9,12 +9,34 @@
             "address": "Hollister Hall"
         },
         {
-            "name": "No wheelchair support",
-            "location": "lat=42.44475878208129&lng=-76.4841378843613",
+            "name": "Perfectly accessible to grab coffee!",
+            "location": "lat=42.44211407059284&lng=-76.48544807608023",
             "date": "10/5/2024",
-            "time": "8:50:37 PM",
+            "time": "11:50:35 PM",
             "description": "",
-            "address": "Olin Hall"
+            "address": "Collegetown Bagels",
+            "wheelchair": true,
+            "hearingLoop": true
+        },
+        {
+            "name": "Perfectly audible!",
+            "location": "lat=42.44374130746248&lng=-76.48578679116999",
+            "date": "10/5/2024",
+            "time": "11:51:41 PM",
+            "description": "",
+            "address": "Law Library",
+            "wheelchair": false,
+            "hearingLoop": true
+        },
+        {
+            "name": "No wheelchair support",
+            "location": "lat=42.44725196605441&lng=-76.48224451249904",
+            "date": "10/5/2024",
+            "time": "11:54:05 PM",
+            "description": "",
+            "address": "Uris Hall",
+            "wheelchair": true,
+            "hearingLoop": false
         }
     ]
 }

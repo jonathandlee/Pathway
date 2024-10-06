@@ -1,5 +1,5 @@
 import json
-
+import os 
 filepath = 'database/data.json'
 accessibility_filepath = 'database/accessible_locations.json'
 
@@ -40,13 +40,14 @@ def upload_accessibility_to_server(content):
    
 
 def upload_to_server(content):
-    filepath = 'venues.json'  # Define the file path if not already defined
+    # filepath = 'venues.json'  # Define the file path if not already defined
 
     try:
         # Check if the file exists and has content
         if os.path.exists(filepath) and os.path.getsize(filepath) > 0:
             with open(filepath, 'r') as json_file:
                 data = json.load(json_file)
+                print(data)
         else:
             # Initialize data if file doesn't exist or is empty
             data = {"inaccessibility_markers": []}

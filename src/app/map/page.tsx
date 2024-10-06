@@ -49,7 +49,7 @@ const sampleVenues: Venue[] = [
   {
     id: '1',
     name: 'Accessible Cafe',
-    position: { lat: 42.44233661513344, lng: -76.48545504165095 },
+    position: { lat: 0, lng: 0 },
     address: 'Collegetown Bagels',
     features: {
       wheelchair: true,
@@ -426,7 +426,7 @@ export default function MapPage() {
       </div>
 
       {/* Map Controls */}
-      <div className="absolute bottom-4 right-4 space-y-2">
+      <div className="absolute bottom-20 right-4 space-y-2">
         <Button
           variant="secondary"
           size="icon"
@@ -438,7 +438,7 @@ export default function MapPage() {
       </div>
 
       {/* Legend */}
-      {showLegend && (
+      {(
         <Card className="absolute bottom-20 right-4 w-64">
           <CardHeader>
             <CardTitle>Map Legend</CardTitle>
@@ -555,7 +555,7 @@ export default function MapPage() {
       </Dialog>
 
       {/* Help Alert */}
-      <Alert className="absolute bottom-4 left-4 max-w-md bg-white">
+      <Alert className="absolute bottom-20 left-4 max-w-md bg-white">
         <Info className="h-4 w-4" />
         <AlertTitle>Quick Tips</AlertTitle>
         <AlertDescription>
