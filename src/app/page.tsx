@@ -18,13 +18,6 @@ const HomePage: React.FC = () => (
           >
             Get Started
           </a>
-          <a 
-            href="#learn-more" 
-            style={{ backgroundColor: 'rgb(128, 128, 128)', color: 'rgb(255, 255, 255)', fontFamily: 'Open Sans, sans-serif' }}  
-            className="py-3 px-8 rounded-md hover:bg-gray-600"
-          >
-            Learn More
-          </a>
         </div>
       </div>
 
@@ -55,7 +48,7 @@ const HomePage: React.FC = () => (
           className="w-[400px] h-auto mt-4 mb-4 rounded-md"
         />
         <p style={{ fontFamily: 'Open Sans, sans-serif' }}>
-          Easily map out your route, taking into account wheelchair accessibility and other essential details.
+          Easily map out your route, taking into account essential accessibility details
         </p>
       </div>
       {/* Turn-by-Turn Guidance */}
@@ -66,7 +59,7 @@ const HomePage: React.FC = () => (
           alt="Turn-by-Turn Guidance" 
           className="w-[400px] h-auto mt-4 mb-4 rounded-md"
         />
-        <p style={{ fontFamily: 'Open Sans, sans-serif' }}>Follow the map to reach your destination seamlessly.</p>
+        <p style={{ fontFamily: 'Open Sans, sans-serif' }}>Follow the map to reach your destination seamlessly</p>
       </div>
       {/* Real-Time Updates */}
       <div className="p-4 pb-10 w-1/3 break-words">
@@ -77,7 +70,7 @@ const HomePage: React.FC = () => (
           className="w-[400px] h-auto mt-4 mb-4 rounded-md"
         />
         <p style={{ fontFamily: 'Open Sans, sans-serif' }}>
-          Stay informed about any changes or obstacles along your path through crowd-sourced updates from the community.
+          Stay informed about any changes or obstacles along your path through crowd-sourced updates from the community
         </p>
       </div>
     </div>
@@ -164,14 +157,6 @@ const HomePage: React.FC = () => (
         </div>
       </section>
     </div>
-   
-
-    {/* "Learn More" section */}
-    <div id="learn-more" className="p-4 mt-40">
-      <h1 className="text-5xl font-semibold">Learn More</h1>
-      <p style={{ fontFamily: 'Open Sans, sans-serif' }} className="mt-4">More details about the application and its features.</p>
-    </div>
-    
   </div>
 );
 
